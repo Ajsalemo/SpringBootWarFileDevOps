@@ -34,7 +34,7 @@ stages:
       displayName: 'Maven Package'
       inputs:
         mavenOptions: '-DskipTests'
-        mavenPomFile: 'pom.xml'
+        mavenPomFile: '$(System.DefaultWorkingDirectory)/pom.xml'
 
     - task: CopyFiles@2
       displayName: 'Copy Files to artifact staging directory'
@@ -66,5 +66,5 @@ stages:
               azureSubscription: $(azureSubscription)
               appType: webAppLinux
               appName: $(webAppName)
-              customDeployFolder: 'tomcat-devops'
+              customDeployFolder: 'devops'
               package: '$(Pipeline.Workspace)/drop/**/target/*.?(war|jar)'
