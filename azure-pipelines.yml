@@ -9,13 +9,13 @@ trigger:
 variables:
 
   # Azure Resource Manager connection created during pipeline creation
-  azureSubscription: '67fdf4a1-137a-43d3-adff-18bc0b3678bd'
+  azureSubscription: '<ARM CONNECTION ID/AZURE SUBSCRIPTION ID>'
 
   # Web app name
-  webAppName: 'ansalemo-tomcat-devops'
+  webAppName: '<WEB APP NAME>'
 
   # Environment name
-  environmentName: 'ansalemo-tomcat-devops'
+  environmentName: '<WEB APP NAME>'
 
   # Agent VM image name
   vmImageName: 'ubuntu-latest'
@@ -34,7 +34,7 @@ stages:
       displayName: 'Maven Package'
       inputs:
         mavenOptions: '-DskipTests'
-        mavenPomFile: '$(System.DefaultWorkingDirectory)/pom.xml'
+        mavenPomFile: 'pom.xml'
 
     - task: CopyFiles@2
       displayName: 'Copy Files to artifact staging directory'
@@ -61,10 +61,12 @@ stages:
         deploy:
           steps:
           - task: AzureWebApp@1
-            displayName: 'Azure Web App Deploy: ansalemo-tomcat-devops'
+            displayName: 'Azure Web App Deploy: <WEB APP NAME>'
             inputs:
               azureSubscription: $(azureSubscription)
               appType: webAppLinux
               appName: $(webAppName)
+              # This property is what lets us deploy to any folder other than ROOT
+              # This can be any arbitrary name
               customDeployFolder: 'devops'
               package: '$(Pipeline.Workspace)/drop/**/target/*.?(war|jar)'
