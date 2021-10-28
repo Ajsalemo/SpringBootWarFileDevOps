@@ -5,7 +5,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 public class HomeController {
-    String message = "SpringBootWarFileDevOps - HomeController";
+    String message = "SpringBootWarFileDevops - HomeController";
 
     @GetMapping("/")
     public String home() {
